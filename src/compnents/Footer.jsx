@@ -118,7 +118,6 @@ const Footer = () => {
               {[
                 "About Us",
                 "Our Courses",
-                "Instructors",
                 "Enroll Now",
                 "Career",
               ].map((item) => (
@@ -147,10 +146,9 @@ const Footer = () => {
 
               {[
                 "Latest Blog",
-                "Our Galary",
                 "Contact Us",
                 "Privacy Policy",
-                "FAQ’s",
+                // "FAQ’s",
               ].map((item) => (
                 <li key={item}>
                   <a

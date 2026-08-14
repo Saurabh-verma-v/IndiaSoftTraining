@@ -10,8 +10,7 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Navigation, Autoplay } from 'swiper/modules';
-import { data } from 'motion/react-client';
-import { motion, scale } from 'motion/react';
+import { motion } from 'motion/react';
 
 const Data = [
     {
@@ -49,33 +48,49 @@ const Data = [
 
 const Events = () => {
     return (
-        <section className='bg-white pt-18 pb-18'>
-            <motion.div variants="fadeUp" variants={fadeUp} initial="hidden" whileInView="visible" className='max-w-7xl px-4 mx-auto py-8'>
-                <Swiper 
-                    slidesPerView={3}
+        <section className='bg-white pt-8 sm:pt-12 lg:pt-18 pb-8 sm:pb-12 lg:pb-18 overflow-hidden'>
+            <motion.div
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                // viewport={{ once: true, amount: 0.15 }}
+                className='max-w-7xl px-3 sm:px-4 mx-auto py-6 sm:py-8'
+            >
+                <Swiper
+                    slidesPerView={1}
+                    breakpoints={{
+                        640: {
+                            slidesPerView: 2,
+                            spaceBetween: 18,
+                        },
+                        1024: {
+                            slidesPerView: 3,
+                            spaceBetween: 30,
+                        },
+                    }}
                     autoplay={{
-                        delay:0,
+                        delay: 0,
                         disableOnInteraction: false,
                     }}
                     loop={true}
                     speed={2000}
-                    spaceBetween={30}
+                    spaceBetween={14}
                     navigation={true}
-                    autoplay={true}
-                    // spaceBetween={40}
-
                     modules={[Navigation, Autoplay]}
-                    className="mySwiper"
+                    className="mySwiper !pb-2"
                 >
                     {
                         Data.map((item, idx) => (
-                            <SwiperSlide className=' shadow-xl rounded-xl' key={idx}>
-                                <div className=' overflow-hidden'>
+                            <SwiperSlide className='shadow-xl rounded-xl h-auto' key={idx}>
+                                <div className='overflow-hidden rounded-xl h-full flex flex-col'>
                                     {/* top */}
-                                    <div className='bg-[#0f4a85] text-white text-lg font-bold text-center py-1'>{item.title}</div>
+                                    <div className='bg-[#0f4a85] text-white text-base sm:text-lg font-bold text-center py-2 px-3 min-h-10 flex items-center justify-center'>
+                                        {item.title}
+                                    </div>
+
                                     {/* content */}
-                                    <div className=' bg-[#E0F1FF]/15 p-5 text-gray-600 overflow-hidden'>
-                                        <p>
+                                    <div className='bg-[#E0F1FF]/15 p-4 sm:p-5 text-gray-600 flex-1'>
+                                        <p className='text-sm sm:text-base leading-6 sm:leading-7'>
                                             {item.para}
                                         </p>
                                     </div>

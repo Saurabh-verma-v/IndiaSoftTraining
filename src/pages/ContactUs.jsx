@@ -89,7 +89,7 @@ const ContactUs = () => {
           </p>
         </div>
 
-        <div   className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div   className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 overflow-hidden">
           {/* Contact Information Section */}
           <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" className="space-y-6">
             <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
@@ -167,7 +167,7 @@ const ContactUs = () => {
             </div>
 
             {/* Social Links */}
-            <motion.div variants={fadeRight} initial="hidden" whileInView="visible" className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+            <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{once:true}} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
               <h4 className="text-sm font-medium text-slate-700 mb-3">Connect With Us</h4>
               <div className="flex gap-3">
                 <a href="#" className="w-10 h-10 rounded-full bg-blue-50 hover:bg-blue-100 flex items-center justify-center transition-colors">
@@ -195,7 +195,7 @@ const ContactUs = () => {
           </motion.div>
 
           {/* Contact Form Section */}
-          <motion.div variants={fadeRight} initial="hidden" whileInView="visible" className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
+          <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={{once:true}} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
             <h3 className="text-xl font-semibold text-slate-800 mb-4">
               Send Us a Message
             </h3>

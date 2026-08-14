@@ -22,7 +22,8 @@ import {
   Clock
 } from 'lucide-react';
 import { motion } from 'motion/react';
-
+import { Link } from 'react-router-dom';
+Link
 const programData = [
   {
     id: 1,
@@ -231,7 +232,8 @@ const ProgramPage = () => {
         {/* Hero Section */}
         <section className="pt-24 pb-12 bg-gradient-to-b from-white to-[#E0F1FF]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <motion.div initial={{scale:0.5, opacity:0}} whileInView={{scale:1,opacity:1}} transition={{duration:1.3, ease:"'circOut"}} className="text-center">
+            <motion.div initial={{scale:0.5, opacity:0}} whileInView={{scale:1,opacity:1}} transition={{duration:1.3, ease:"'circOut"}}
+            className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[#0f4a85]">
                 Explore Our <span className="text-yellow-300">Programs</span>
               </h1>
@@ -261,7 +263,7 @@ const ProgramPage = () => {
         {/* Category Filters */}
         <section className="py-8 bg-gray-50 border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" className="flex flex-wrap justify-center gap-3">
+            <motion.div variants={fadeUp} initial="hidden" whileInView="visible" className="flex flex-wrap justify-center gap-3">
               {categories.map((cat) => (
                 <button
                   key={cat.id}
@@ -278,10 +280,10 @@ const ProgramPage = () => {
           </div>
         </section>
 
-        {/* Programs Grid */}
+        {/* Programs Grid //ss */}    
         <section className="py-12 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div variants={fadeUp} initial="hidden" whileInView="visible" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPrograms.map((program) => {
                 const Icon = program.icon;
                 const isHovered = hoveredProgram === program.id;
@@ -331,7 +333,7 @@ const ProgramPage = () => {
                   </motion.div>
                 );
               })}
-            </motion.div>
+            </div>
 
             {/* View All Programs CTA */}
             {/* <div className="mt-12 text-center">
@@ -354,9 +356,11 @@ const ProgramPage = () => {
               Get industry-ready with our comprehensive training programs. Enroll today and take the first step toward a successful career in IT.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <motion.button whileHover={{scale:1.2}} transition={{duration:0.3, ease:"easeInOut"}} whileTap={{scale:0.9}} className="bg-[#0f4a85]  text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl cursor-pointer">
+             <Link to ="/contact"> 
+                <motion.button whileHover={{scale:1.2}} transition={{duration:0.3, ease:"easeInOut"}} whileTap={{scale:0.9}} className="bg-[#0f4a85]  text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl cursor-pointer">
                 Enroll Now
-              </motion.button> 
+                </motion.button> 
+              </Link>
             </div>
           </motion.div>
         </section>  

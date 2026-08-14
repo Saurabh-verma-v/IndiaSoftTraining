@@ -14,6 +14,7 @@ const Video = () => {
                 controls
                 autoPlay
                 loop
+                muted
                 src={vdo}>
 
                  </video>
