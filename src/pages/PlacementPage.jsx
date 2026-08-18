@@ -2,11 +2,13 @@ import React from 'react'
 import banner from '../assets/images/MultiStu.png'
 import NavTab from '../compnents/NavTab'
 import Footer from '../compnents/Footer'
+
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import { Pagination, Navigation, Autoplay } from 'swiper/modules'
+
 import adani from '../assets/images/CompanyLogo/Adani.png'
 import Berger from '../assets/images/CompanyLogo/Berger.png'
 import coforge from '../assets/images/CompanyLogo/coforge.png'

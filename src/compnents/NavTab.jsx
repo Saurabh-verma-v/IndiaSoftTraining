@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
     Menu,
@@ -9,6 +9,7 @@ import {
     useScroll,
     useMotionValueEvent
 } from 'motion/react'
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const NavTab = () => {
 
@@ -16,6 +17,8 @@ const NavTab = () => {
 
     const [hidden, setHidden] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false)
+    const [openDropdown, setOpenDropdown] = useState(null)
+    const dropdownTimer = useRef(null)
 
     useMotionValueEvent(scrollY, "change", (current) => {
         const previous = scrollY.getPrevious() ?? 0
@@ -30,6 +33,42 @@ const NavTab = () => {
     // Close mobile menu after clicking a link
     const closeMenu = () => {
         setMenuOpen(false)
+        setOpenDropdown(null)  // Fixed: properly set dropdown to null
+    }
+
+    // Handle desktop dropdown hover
+    const handleMouseEnter = (dropdown) => {
+        if (dropdownTimer.current) {
+            clearTimeout(dropdownTimer.current)
+        }
+
+        setOpenDropdown(dropdown)
+    }
+
+    const handleMouseLeave = () => {
+        if (dropdownTimer.current) {
+            clearTimeout(dropdownTimer.current)
+        }
+
+        dropdownTimer.current = setTimeout(() => {
+            setOpenDropdown(null)
+        }, 200)
+    }
+
+    // Clear timer when component unmounts
+    useEffect(() => {
+        return () => {
+            if (dropdownTimer.current) {
+                clearTimeout(dropdownTimer.current)
+            }
+        }
+    }, [])
+
+    // Handle dropdown click for mobile
+    const handleDropdownClick = (dropdown) => {
+        setOpenDropdown((current) =>
+            current === dropdown ? null : dropdown
+        )
     }
 
     return (
@@ -55,7 +94,7 @@ const NavTab = () => {
         >
 
             <div className="
-                max-w-7xl
+                max-w-8xl
                 mx-auto
                 px-4
                 sm:px-6
@@ -168,6 +207,282 @@ const NavTab = () => {
                                 Placement
                             </li>
                         </Link>
+
+                        {/* ================= TRAINING DROPDOWN ================= */}
+                        <li 
+                            className="relative"
+                            onMouseEnter={() => handleMouseEnter('training')}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <div className={`
+                                text-base
+                                font-semibold
+                                px-3
+                                py-2
+                                hover:bg-[#ffb703]
+                                hover:text-white
+                                rounded-xl
+                                cursor-pointer
+                                transition-all
+                                duration-300
+                                flex items-center gap-1
+                                ${openDropdown === 'training' ? 'bg-[#ffb703] text-white' : ''}
+                            `}>
+                                Training
+                                <MdKeyboardArrowDown 
+                                    size={20} 
+                                    className={`transition-transform duration-300 ${openDropdown === 'training' ? 'rotate-180' : ''}`}
+                                />
+                            </div>
+
+                            {openDropdown === 'training' && (
+                                <div className="
+                                    absolute
+                                    top-full
+                                    left-0
+                                    mt-0
+                                    w-[220px]
+                                    bg-white
+                                    rounded-xl
+                                    shadow-xl
+                                    border
+                                    border-gray-100
+                                    overflow-hidden
+                                    z-50
+                                    animate-fadeIn
+                                "
+                                    onMouseEnter={() => handleMouseEnter('training')}
+                                    onMouseLeave={handleMouseLeave}
+                                >
+                                    <Link 
+                                        to="/corporate-training"
+                                        onClick={closeMenu}
+                                        className="
+                                            block
+                                            px-4
+                                            py-3
+                                            text-sm
+                                            font-medium
+                                            text-gray-700
+                                            hover:bg-[#ffb703]
+                                            hover:text-white
+                                            transition-all
+                                            duration-200
+                                            border-l-2
+                                            border-transparent
+                                            hover:border-[#ffb703]
+                                        "
+                                    >
+                                        Corporate Training
+                                    </Link>
+                                    <Link 
+                                        to="/campus-training"
+                                        onClick={closeMenu}
+                                        className="
+                                            block
+                                            px-4
+                                            py-3
+                                            text-sm
+                                            font-medium
+                                            text-gray-700
+                                            hover:bg-[#ffb703]
+                                            hover:text-white
+                                            transition-all
+                                            duration-200
+                                            border-l-2
+                                            border-transparent
+                                            hover:border-[#ffb703]
+                                        "
+                                    >
+                                        Campus Training
+                                    </Link>
+                                </div>
+                            )}
+                        </li>
+
+                        {/* ================= CAREER DROPDOWN ================= */}
+                        <li 
+                            className="relative"
+                            onMouseEnter={() => handleMouseEnter('career')}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <div className={`
+                                text-base
+                                font-semibold
+                                px-3
+                                py-2
+                                hover:bg-[#ffb703]
+                                hover:text-white
+                                rounded-xl
+                                cursor-pointer
+                                transition-all
+                                duration-300
+                                flex items-center gap-1
+                                ${openDropdown === 'career' ? 'bg-[#ffb703] text-white' : ''}
+                            `}>
+                                Career
+                                <MdKeyboardArrowDown 
+                                    size={20} 
+                                    className={`transition-transform duration-300 ${openDropdown === 'career' ? 'rotate-180' : ''}`}
+                                />
+                            </div>
+
+                            {openDropdown === 'career' && (
+                                <div className="
+                                    absolute
+                                    top-full
+                                    left-0
+                                    mt-0
+                                    w-[220px]
+                                    bg-white
+                                    rounded-xl
+                                    shadow-xl
+                                    border
+                                    border-gray-100
+                                    overflow-hidden
+                                    z-50
+                                    animate-fadeIn
+                                "
+                                    onMouseEnter={() => handleMouseEnter('career')}
+                                    onMouseLeave={handleMouseLeave}
+                                >
+                                    <Link 
+                                        to="/join-as-trainer"
+                                        onClick={closeMenu}
+                                        className="
+                                            block
+                                            px-4
+                                            py-3
+                                            text-sm
+                                            font-medium
+                                            text-gray-700
+                                            hover:bg-[#ffb703]
+                                            hover:text-white
+                                            transition-all
+                                            duration-200
+                                            border-l-2
+                                            border-transparent
+                                            hover:border-[#ffb703]
+                                        "
+                                    >
+                                        Join as Trainer
+                                    </Link>
+                                </div>
+                            )}
+                        </li>
+
+                        {/* ================= INSIGHTS DROPDOWN ================= */}
+                        <li 
+                            className="relative"
+                            onMouseEnter={() => handleMouseEnter('insights')}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <div className={`
+                                text-base
+                                font-semibold
+                                px-3
+                                py-2
+                                hover:bg-[#ffb703]
+                                hover:text-white
+                                rounded-xl
+                                cursor-pointer
+                                transition-all
+                                duration-300
+                                flex items-center gap-1
+                                ${openDropdown === 'insights' ? 'bg-[#ffb703] text-white' : ''}
+                            `}>
+                                Insights
+                                <MdKeyboardArrowDown 
+                                    size={20} 
+                                    className={`transition-transform duration-300 ${openDropdown === 'insights' ? 'rotate-180' : ''}`}
+                                />
+                            </div>
+
+                            {openDropdown === 'insights' && (
+                                <div className="
+                                    absolute
+                                    top-full
+                                    left-0
+                                    mt-0
+                                    w-[220px]
+                                    bg-white
+                                    rounded-xl
+                                    shadow-xl
+                                    border
+                                    border-gray-100
+                                    overflow-hidden
+                                    z-50
+                                    animate-fadeIn
+                                "
+                                    onMouseEnter={() => handleMouseEnter('insights')}
+                                    onMouseLeave={handleMouseLeave}
+                                >
+                                    <Link 
+                                        to="/blogs"
+                                        onClick={closeMenu}
+                                        className="
+                                            block
+                                            px-4
+                                            py-3
+                                            text-sm
+                                            font-medium
+                                            text-gray-700
+                                            hover:bg-[#ffb703]
+                                            hover:text-white
+                                            transition-all
+                                            duration-200
+                                            border-l-2
+                                            border-transparent
+                                            hover:border-[#ffb703]
+                                        "
+                                    >
+                                        Blogs
+                                    </Link>
+                                    <Link 
+                                        to="/success-stories"
+                                        onClick={closeMenu}
+                                        className="
+                                            block
+                                            px-4
+                                            py-3
+                                            text-sm
+                                            font-medium
+                                            text-gray-700
+                                            hover:bg-[#ffb703]
+                                            hover:text-white
+                                            transition-all
+                                            duration-200
+                                            border-l-2
+                                            border-transparent
+                                            hover:border-[#ffb703]
+                                        "
+                                    >
+                                        Success Stories
+                                    </Link>
+                                    <Link 
+                                        to="/career-guidance"
+                                        onClick={closeMenu}
+                                        className="
+                                            block
+                                            px-4
+                                            py-3
+                                            text-sm
+                                            font-medium
+                                            text-gray-700
+                                            hover:bg-[#ffb703]
+                                            hover:text-white
+                                            transition-all
+                                            duration-200
+                                            border-l-2
+                                            border-transparent
+                                            hover:border-[#ffb703]
+                                        "
+                                    >
+                                        Career Guidance
+                                    </Link>
+                                </div>
+                            )}
+                        </li>
 
                         <Link to="/testimonials">
                             <li className="
@@ -357,6 +672,168 @@ const NavTab = () => {
                             >
                                 Placement
                             </Link>
+
+                            {/* ================= MOBILE TRAINING DROPDOWN ================= */}
+                            <div className="px-4 py-2">
+                                <div 
+                                    className="
+                                        font-semibold
+                                        text-white
+                                        mb-2
+                                        flex items-center gap-1
+                                        cursor-pointer
+                                    "
+                                    onClick={() => handleDropdownClick('mobile-training')}
+                                >
+                                    Training
+                                    <MdKeyboardArrowDown 
+                                        size={20} 
+                                        className={`transition-transform duration-300 ${openDropdown === 'mobile-training' ? 'rotate-180' : ''}`}
+                                    />
+                                </div>
+                                {openDropdown === 'mobile-training' && (
+                                    <div className="ml-4 space-y-1 border-l-2 border-[#ffb703] pl-4">
+                                        <Link
+                                            to="/corporate-training"
+                                            onClick={closeMenu}
+                                            className="
+                                                block
+                                                py-2
+                                                text-sm
+                                                text-white/80
+                                                hover:text-[#ffb703]
+                                                transition-colors
+                                                duration-200
+                                            "
+                                        >
+                                            Corporate Training
+                                        </Link>
+                                        <Link
+                                            to="/campus-training"
+                                            onClick={closeMenu}
+                                            className="
+                                                block
+                                                py-2
+                                                text-sm
+                                                text-white/80
+                                                hover:text-[#ffb703]
+                                                transition-colors
+                                                duration-200
+                                            "
+                                        >
+                                            Campus Training
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* ================= MOBILE CAREER DROPDOWN ================= */}
+                            <div className="px-4 py-2">
+                                <div 
+                                    className="
+                                        font-semibold
+                                        text-white
+                                        mb-2
+                                        flex items-center gap-1
+                                        cursor-pointer
+                                    "
+                                    onClick={() => handleDropdownClick('mobile-career')}
+                                >
+                                    Career
+                                    <MdKeyboardArrowDown 
+                                        size={20} 
+                                        className={`transition-transform duration-300 ${openDropdown === 'mobile-career' ? 'rotate-180' : ''}`}
+                                    />
+                                </div>
+                                {openDropdown === 'mobile-career' && (
+                                    <div className="ml-4 space-y-1 border-l-2 border-[#ffb703] pl-4">
+                                        <Link
+                                            to="/join-as-trainer"
+                                            onClick={closeMenu}
+                                            className="
+                                                block
+                                                py-2
+                                                text-sm
+                                                text-white/80
+                                                hover:text-[#ffb703]
+                                                transition-colors
+                                                duration-200
+                                            "
+                                        >
+                                            Join as Trainer
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* ================= MOBILE INSIGHTS DROPDOWN ================= */}
+                            <div className="px-4 py-2">
+                                <div 
+                                    className="
+                                        font-semibold
+                                        text-white
+                                        mb-2
+                                        flex items-center gap-1
+                                        cursor-pointer
+                                    "
+                                    onClick={() => handleDropdownClick('mobile-insights')}
+                                >
+                                    Insights
+                                    <MdKeyboardArrowDown 
+                                        size={20} 
+                                        className={`transition-transform duration-300 ${openDropdown === 'mobile-insights' ? 'rotate-180' : ''}`}
+                                    />
+                                </div>
+                                {openDropdown === 'mobile-insights' && (
+                                    <div className="ml-4 space-y-1 border-l-2 border-[#ffb703] pl-4">
+                                        <Link
+                                            to="/blogs"
+                                            onClick={closeMenu}
+                                            className="
+                                                block
+                                                py-2
+                                                text-sm
+                                                text-white/80
+                                                hover:text-[#ffb703]
+                                                transition-colors
+                                                duration-200
+                                            "
+                                        >
+                                            Blogs
+                                        </Link>
+                                        <Link
+                                            to="/success-stories"
+                                            onClick={closeMenu}
+                                            className="
+                                                block
+                                                py-2
+                                                text-sm
+                                                text-white/80
+                                                hover:text-[#ffb703]
+                                                transition-colors
+                                                duration-200
+                                            "
+                                        >
+                                            Success Stories
+                                        </Link>
+                                        <Link
+                                            to="/career-guidance"
+                                            onClick={closeMenu}
+                                            className="
+                                                block
+                                                py-2
+                                                text-sm
+                                                text-white/80
+                                                hover:text-[#ffb703]
+                                                transition-colors
+                                                duration-200
+                                            "
+                                        >
+                                            Career Guidance
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
 
                             <Link
                                 to="/testimonials"
