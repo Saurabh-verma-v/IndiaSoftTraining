@@ -8,9 +8,9 @@ import {createEnquiry,
   deleteEnquiry,} from '../controllers/enquiryController.js'
 
 
-router.post('/',authMiddleware,createEnquiry)
-router.get('/',getAllEnquiries)
-router.get('/:id',getEnquiryById)
+router.post('/',createEnquiry)
+router.get('/',authMiddleware,getAllEnquiries)
+router.get('/:id',authMiddleware,getEnquiryById)
 router.put('/:id',authMiddleware,updateEnquiry)
 router.delete('/:id',authMiddleware,deleteEnquiry)
 
