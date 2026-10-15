@@ -1,3 +1,4 @@
+import API from '../services/api.js'
 import React, { useState } from "react";
 import NavTab from '../compnents/NavTab'
 import Footer from '../compnents/Footer'
@@ -21,14 +22,19 @@ const ContactUs = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log("Form submitted:", formData);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await API.post("/enquiries", formData);
+
+    console.log("Enquiry created successfully:", response.data);
+
     setIsSubmitted(true);
-    // Reset form after 3 seconds
+
     setTimeout(() => {
       setIsSubmitted(false);
+
       setFormData({
         name: "",
         email: "",
@@ -37,7 +43,36 @@ const ContactUs = () => {
         message: "",
       });
     }, 3000);
-  };
+  } catch (error) {
+    console.error(
+      "Error submitting enquiry:",
+      error.response?.data || error.message
+    );
+
+    alert(
+      error.response?.data?.message ||
+        "Failed to submit your enquiry. Please try again."
+    );
+  }
+};
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Here you would typically send the data to your backend
+  //   console.log("Form submitted:", formData);
+  //   setIsSubmitted(true);
+  //   // Reset form after 3 seconds
+  //   setTimeout(() => {
+  //     setIsSubmitted(false);
+  //     setFormData({
+  //       name: "",
+  //       email: "",
+  //       phone: "",
+  //       course: "",
+  //       message: "",
+  //     });
+  //   }, 3000);
+  // };
 
    const fadeLeft = {
     hidden: {
