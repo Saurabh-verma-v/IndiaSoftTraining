@@ -1,3 +1,4 @@
+import API from '../services/api.js'
 import React, { useState } from "react";
 
 const TrainerApplicationForm = () => {
@@ -23,12 +24,67 @@ const TrainerApplicationForm = () => {
     setFormData((prev) => ({ ...prev, resume: e.target.files[0] }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Data:", formData);
-    // Add your form submission logic here
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Form Data:", formData);
+  //   // Add your form submission logic here
+  // };
 
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const applicationData = new FormData();
+
+    applicationData.append("fullName", formData.fullName);
+    applicationData.append("email", formData.email);
+    applicationData.append("mobile", formData.mobile);
+    applicationData.append("qualification", formData.qualification);
+    applicationData.append("course", formData.course);
+    applicationData.append("experience", formData.experience);
+    applicationData.append("availability", formData.availability);
+    applicationData.append("technicalSkills", formData.technicalSkills);
+    applicationData.append("message", formData.message);
+
+    if (formData.resume) {
+      applicationData.append("resume", formData.resume);
+    }
+
+    const response = await API.post(
+      "/trainer-applications",
+      applicationData
+    );
+
+    console.log("Application submitted successfully:", response.data);
+
+    alert("Your trainer application was submitted successfully!");
+
+    setFormData({
+      fullName: "",
+      email: "",
+      mobile: "",
+      qualification: "",
+      course: "",
+      experience: "",
+      availability: "",
+      technicalSkills: "",
+      resume: null,
+      message: "",
+    });
+
+    e.target.reset();
+  } catch (error) {
+    console.error(
+      "Error submitting trainer application:",
+      error.response?.data || error.message
+    );
+
+    alert(
+      error.response?.data?.message ||
+        "Failed to submit your application. Please try again."
+    );
+  }
+};
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 rounded-2xl">
 
