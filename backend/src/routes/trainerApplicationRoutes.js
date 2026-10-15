@@ -8,9 +8,9 @@ import {createTrainerApplication,
   deleteTrainerApplication,} from '../controllers/trainerApplicationController.js'
 
 
-router.post('/',authMiddleware,createTrainerApplication)
-router.get('/',getAllTrainerApplications)
-router.get('/:id',getTrainerApplicationById)
+router.post('/',createTrainerApplication)
+router.get('/',authMiddleware,getAllTrainerApplications)
+router.get('/:id',authMiddleware,getTrainerApplicationById)
 router.put('/:id',authMiddleware,updateTrainerApplication)
 router.delete('/:id',authMiddleware,deleteTrainerApplication)
 
